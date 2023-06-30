@@ -1,0 +1,29 @@
+name: Schedule Python Script
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+
+jobs:
+  run_script:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
+
+      - name: Clean up environment
+        run: |
+            pip uninstall -y google-api-python-client
+            pip install --upgrade pip
+      - name: Install dependencies
+        run: |
+            pip install google-api-python-client
+            pip install google-auth-oauthlib
+      - name: Run Python script
+        run: python Code.py
